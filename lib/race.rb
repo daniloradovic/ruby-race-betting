@@ -3,22 +3,20 @@ module RaceBet
 
     class << self
       def score(guesses, winners)
+      	
       	sum = 0
-      	guesses.each_with_index do |guess, index|
-      		if index == 0 && guess == winners[index]
-      			sum += 15
-      		elsif index == 1 && guess == winners[index]
-      			sum += 10
-      		elsif index == 2 && guess == winners[index]
-      			sum += 5
-      		elsif index == 3 && guess == winners[index]
-      			sum += 3
-      		elsif index == 4 && guess == winners[index]
-      			sum += 1
-      		elsif winners[0..4].include?(guess)
+      	points = {0 => 15, 1 => 10, 2 => 5, 3 => 3, 4 => 1}
+      	top_5 = 0..4
+
+      	guesses[top_5].each_with_index do |guess, index|
+      		next if guess.nil? || winners[index].nil?
+
+      		if guess == winners[index]
+      			sum += points[index]
+      		elsif winners[top_5].include?(guess)
       			sum += 1
       		end
-      	end	
+      	end
       	sum
       end
 
