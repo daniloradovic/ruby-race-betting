@@ -1,26 +1,29 @@
 module RaceBet
-  class Race
+	class Race
 
-    class << self
-      def score(guesses, winners)
-      	
-      	sum = 0
-      	points = {0 => 15, 1 => 10, 2 => 5, 3 => 3, 4 => 1}
-      	top_5 = 0..4
+		class << self
+			def score(guesses, winners)
 
-      	guesses[top_5].each_with_index do |guess, index|
-      		next if guess.nil? || winners[index].nil?
+				
+				top_5 = 0..4
 
-      		if guess == winners[index]
-      			sum += points[index]
-      		elsif winners[top_5].include?(guess)
-      			sum += 1
-      		end
-      	end
-      	sum
-      end
+				points = [15, 10, 5, 3, 1]
+				top_winners = winners[top_5]
+				top_guesses = guesses[top_5]
+				gwp = top_guesses.zip(top_winners,points)
 
-    end
+				points = gwp.map do |guess, winner, points|
+					if guess == winner
+						points
+					elsif top_winners.include?(guess)
+						1
+					end
+				end	
 
-  end
+				points.compact.inject(0){|sum, a| sum + a}
+			end
+
+		end
+
+	end
 end
