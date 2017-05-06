@@ -2,14 +2,12 @@ module RaceBet
 	class Race
 
 		class << self
-			def score(guesses, winners)
-
+			def score(guesses, winners, n=5)
 				
-				top_5 = 0..4
-
+				top_n = 0..n-1
 				points = [15, 10, 5, 3, 1]
-				top_winners = winners[top_5]
-				top_guesses = guesses[top_5]
+				top_winners = winners[top_n]
+				top_guesses = guesses[top_n]
 				gwp = top_guesses.zip(top_winners,points)
 
 				points = gwp.map do |guess, winner, points|
